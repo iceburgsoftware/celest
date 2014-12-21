@@ -6,25 +6,31 @@ string hey()
     return a;
 }
 
-void error(const char *msg)
+void error (const char *msg)
 {
     perror(msg);
     exit(1);
 }
 
-void dostuff (int sock, ostream& logfile)
+void process_connection (int sock)
 {
     int n;
     char buffer[256];
-
-    bzero(buffer,256);
-    n = read(sock,buffer,255);
-    if (n < 0) error("ERROR reading from socket");
+    char reply[256];
     
-    printf("Here is the message: %s\n",buffer);
-    n = write(sock,"I got your message",18);
-    logfile << buffer << endl;
-    
-    if (n < 0) error("ERROR writing to socket");
+    // Keep the connection open until done
+    while (1) {
+	bzero(buffer, 256);
+	n = recv(sock, buffer, 255, 0);
+	if (n < 0) error("ERROR reading from socket");
+	
+	cout << buffer << endl;
+	
+	cout << "response: ";
+	fgets(reply, 255, stdin);
+	n = send(sock, reply, strlen(reply), 0);
+	
+	if (n < 0) error("ERROR writing to socket");
+    }
 }
 

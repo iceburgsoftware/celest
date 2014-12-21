@@ -1,6 +1,6 @@
 #include "celest.h"
 
-int main(int argc, char* argv[])
+int main (int argc, char* argv[])
 {
     int sockfd, newsockfd, portno, pid;
     socklen_t clilen;
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     logfile.open("celest.log");
     signal(SIGCHLD, SIG_IGN); // Quick and dirty fix to get rid of zombies.  
     
-    daemon(0, 0);
+    //daemon(0, 0);
     while (1) {
 	newsockfd = accept(sockfd, 
 	    (struct sockaddr *) &cli_addr, &clilen);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	
 	else if (pid == 0)  {
 	    close(sockfd);
-	    dostuff(newsockfd, logfile);
+	    process_connection(newsockfd);
 	    exit(0);
 	}
 	

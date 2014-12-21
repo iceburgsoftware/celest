@@ -1,4 +1,5 @@
 # Very simple makefile at the moment.
+# Server Makefile for Celestia project.
 CC=g++
 
 CFLAGS= -c -Wall

@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <syslog.h>
 #include <signal.h>
 #include <sys/wait.h>
@@ -37,6 +39,6 @@ void error(const char *msg);
 #ifndef DOSTUFF_H
 #define DOSTUFF_H
 
-void dostuff(int, ostream&);
+void process_connection(int);
 
 #endif
